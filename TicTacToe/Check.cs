@@ -8,9 +8,14 @@ namespace TicTacToe
 {
     public class Check
     {
-        public static bool CheckValidity(Grid grid, int cell)
+        public static bool ValidMove(Grid grid, int cell)
         {
-            if (grid.availableMoves[cell - 1] == ' ')
+            if (cell < 1 || cell > 9)
+            {
+                Console.WriteLine("\nChoose an unfilled cell (1 - 9).");
+                return false;
+            }
+            else if (grid.availableMoves[cell - 1] == ' ')
             {
                 Console.WriteLine("\nThat cell has been filled already. Please choose a free cell.");
                 return false;
@@ -18,7 +23,7 @@ namespace TicTacToe
             else return true;
         }
 
-        public static bool CheckWinOrDraw(Grid grid, int turn)
+        public static bool WinOrDraw(Grid grid, int turn)
         {
             bool win = false;
 
@@ -72,6 +77,19 @@ namespace TicTacToe
             }
 
             return win;
+        }
+
+        public static char ValidYesOrNo(char input) // Checks if the input is valid
+        {
+            if (input == 'Y' || input == 'N')
+            {
+                return input; // Sends back answer for processing.
+            }
+            else
+            {
+                Console.WriteLine("\nThat input isn't valid.");
+                return ' '; // Sends back space to trigger another prompt for Y or N.
+            }
         }
     }
 }

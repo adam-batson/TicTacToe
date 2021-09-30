@@ -31,7 +31,7 @@ namespace TicTacToe
                 do // Asks for input once, but repeats request if the chosen cell is already filled.
                 {
                     input = UI.MoveChoice(TurnCount);
-                    InputIsValid = Check.CheckValidity(grid, input);
+                    InputIsValid = Check.ValidMove(grid, input);
                 } while (InputIsValid == false);
 
 
@@ -41,10 +41,11 @@ namespace TicTacToe
 
                 if (TurnCount >= 5) // Turn 5 is the earliest that a win condition can be met.
                 {
-                    if (Check.CheckWinOrDraw(grid, TurnCount)) // If a win is found, it returns true and exits the game loop.
+                    if (Check.WinOrDraw(grid, TurnCount)) // If a win is found, it returns true and exits the game loop.
                         break;
                 }
             }
+
         }
     }    
         

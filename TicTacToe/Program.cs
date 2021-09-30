@@ -6,8 +6,11 @@ namespace TicTacToe
     {
         static void Main(string[] args)
         {
-            Game game = new();
-            game.PlayGame();            
+            do
+            {
+                Game game = new();
+                game.PlayGame();
+            } while (UI.PlayAgain());
         }
     }
 }

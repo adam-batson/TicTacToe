@@ -40,5 +40,29 @@ namespace TicTacToe
         {
             Console.WriteLine("\nAll cells are filled with no winner. The game is a draw.");
         }
+
+        public static bool PlayAgain()
+        {
+            char answer;
+            char c;
+
+            do
+            {
+                Console.Write("\nWould you like to play again? (Y or N) ");
+                answer = Convert.ToChar(Console.ReadLine().ToUpper()); // Takes the string input, makes it an uppercase char.
+                c = Check.ValidYesOrNo(answer);
+
+            } while (c != 'Y' || c != 'N');
+
+            if (c == 'Y') // Repeat the game
+            {
+                return true;
+            }
+            else // c == 'N' so don't repeat the game.
+            {
+                return false;
+            }
+            
+        }
     }
 }
