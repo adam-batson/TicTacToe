@@ -8,35 +8,45 @@ namespace TicTacToe
 {
     public class Grid
     {
-        private char[] moves = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+        public char[] Moves { get; private set; }
+        public char[] availableMoves { get; private set; }
+        
+        public Grid()
+        {
+            ResetGrid();
+        }
 
         public void PrintGrid()
         {
-            Console.WriteLine($" {moves[0]} | {moves[1]} | {moves[2]}");
-            Console.WriteLine("-----------");
-            Console.WriteLine($" {moves[3]} | {moves[4]} | {moves[5]}");
-            Console.WriteLine("-----------");
-            Console.WriteLine($" {moves[6]} | {moves[7]} | {moves[8]}");
+            Console.Clear(); // Clears screen for neatness.
+            Console.WriteLine($"\n {Moves[0]} | {Moves[1]} | {Moves[2]}");
+            Console.WriteLine("---+---+---");
+            Console.WriteLine($" {Moves[3]} | {Moves[4]} | {Moves[5]}");
+            Console.WriteLine("---+---+---");
+            Console.WriteLine($" {Moves[6]} | {Moves[7]} | {Moves[8]}\n");
 
         }
-
         
-
         public void AddToGrid(int index, int turn)
         {
-            if(turn == 1)
+            turn %= 2;
+
+            if(turn == 0)
             {
-                moves[index - 1] = 'X';
+                Moves[index - 1] = 'X';
             }
             else
             {
-                moves[index - 1] = 'O';
+                Moves[index - 1] = 'O';
             }
+
+            availableMoves[index - 1] = ' ';
         }
 
         public void ResetGrid()
         {
-            moves = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+            Moves = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+            availableMoves = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
         }
     }
 }

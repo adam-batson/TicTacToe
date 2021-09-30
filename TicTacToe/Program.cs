@@ -6,20 +6,8 @@ namespace TicTacToe
     {
         static void Main(string[] args)
         {
-            //UserInterface.Welcome();
-            //UserInterface.ShapeChoice();
-
-            Grid grid = new();
-
-            grid.PrintGrid();
-
-            grid.AddToGrid(UserInterface.MoveChoice(1), 1);
-            grid.PrintGrid();
-            grid.AddToGrid(UserInterface.MoveChoice(2), 2);
-            grid.PrintGrid();
-            grid.AddToGrid(UserInterface.MoveChoice(1), 1);
-            grid.PrintGrid();
-
+            Game game = new();
+            game.PlayGame();            
         }
     }
 }
