@@ -9,7 +9,7 @@ namespace TicTacToe
     public class Grid
     {
         public char[] Moves { get; private set; }
-        public char[] availableMoves { get; private set; }
+        public char[] AvailableMoves { get; private set; }
         
         public Grid()
         {
