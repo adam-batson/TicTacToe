@@ -12,6 +12,9 @@ namespace TicTacToe
         public bool InputIsValid { get; private set; }
         private Grid grid;
 
+        private string[] WinConditions => new string[] {grid.WinRow1, grid.WinRow2, grid.WinRow3,
+                                                        grid.WinColumn1, grid.WinColumn2, grid.WinColumn3,
+                                                        grid.WinDiagonal1, grid.WinDiagonal2 };
         public Game()
         {
             grid = new Grid();
@@ -41,8 +44,13 @@ namespace TicTacToe
 
                 if (TurnCount >= 5) // Turn 5 is the earliest that a win condition can be met.
                 {
-                    if (Check.WinOrDraw(grid, TurnCount)) // If a win is found, it returns true and exits the game loop.
+                    if (Check.Win(WinConditions)) // If a win is found, it returns true and exits the game loop.
                         break;
+                    else if (TurnCount == 9) // If no wins, but also no more moves avalable, calls a draw.
+                    {
+                        UI.NotifyDraw();
+                        break;
+                    }
                 }
             }
 

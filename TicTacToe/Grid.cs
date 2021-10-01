@@ -10,7 +10,16 @@ namespace TicTacToe
     {
         public char[] Moves { get; private set; }
         public char[] AvailableMoves { get; private set; }
-        
+
+        public string WinRow1 => $"{Moves[0]}{Moves[1]}{Moves[2]}";
+        public string WinRow2 => $"{Moves[3]}{Moves[4]}{Moves[5]}";
+        public string WinRow3 => $"{Moves[6]}{Moves[7]}{Moves[8]}";
+        public string WinColumn1 => $"{Moves[0]}{Moves[3]}{Moves[6]}";
+        public string WinColumn2 => $"{Moves[1]}{Moves[4]}{Moves[7]}";
+        public string WinColumn3 => $"{Moves[2]}{Moves[5]}{Moves[8]}";
+        public string WinDiagonal1 => $"{Moves[0]}{Moves[4]}{Moves[8]}";
+        public string WinDiagonal2 => $"{Moves[2]}{Moves[4]}{Moves[6]}";
+
         public Grid()
         {
             ResetGrid();
@@ -40,13 +49,13 @@ namespace TicTacToe
                 Moves[index - 1] = 'O';
             }
 
-            availableMoves[index - 1] = ' ';
+            AvailableMoves[index - 1] = ' ';
         }
 
         public void ResetGrid()
         {
             Moves = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-            availableMoves = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+            AvailableMoves = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
         }
     }
 }

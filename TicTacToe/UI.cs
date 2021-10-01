@@ -52,7 +52,7 @@ namespace TicTacToe
                 answer = Convert.ToChar(Console.ReadLine().ToUpper()); // Takes the string input, makes it an uppercase char.
                 c = Check.ValidYesOrNo(answer);
 
-            } while (c != 'Y' || c != 'N');
+            } while (c != 'Y' && c != 'N');
 
             if (c == 'Y') // Repeat the game
             {
@@ -60,6 +60,7 @@ namespace TicTacToe
             }
             else // c == 'N' so don't repeat the game.
             {
+                Console.WriteLine("\nThanks for playing!");
                 return false;
             }
             
