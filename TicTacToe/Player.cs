@@ -10,15 +10,13 @@ namespace TicTacToe
     {
         public string Name { get; set; }
         public char Shape { get; private set; }
-        public char[] PossibleShapes { get; private set; }
         public int Score { get; private set; }
 
         public Player()
         {
             Name = "Player";
-            Shape = 'X';
+            Shape = '!';
             Score = 0;
-            PossibleShapes = new char[] { 'X', 'O', '@', '#', '$', '*' };
         }
 
         public void ChangeShape(char c)

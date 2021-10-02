@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 namespace TicTacToe
 {
     public class Check
-    {
-        
+    {   
         public static bool ValidMove(Grid grid, int cell)
         {
             if (cell < 1 || cell > 9)
             {
-                Console.WriteLine("\nChoose an unfilled cell (1 - 9).");
+                Console.WriteLine("\nChoose an unfilled cell from 1 to 9.");
                 return false;
             }
             else if (grid.AvailableMoves[cell - 1] == ' ')
@@ -30,24 +29,29 @@ namespace TicTacToe
 
                 if (wincons.Any(x => x.Equals($"{p.Shape}{p.Shape}{p.Shape}"))) // Check if player 1 has 3 in a row.
                 {
-                    UI.NotifyWin(p);
                     win = true;
+                    p.AddScore();
                 }
 
             return win;
         }
 
-        public static char ValidYesOrNo(char input) // Checks if the input is valid
+        public static bool YesOrNo(char input) // Checks if user wants to play again
         {
-            if (input == 'Y' || input == 'N')
+            bool answer = false;
+            input = Char.ToUpper(input);
+
+            if (input == 'Y')
             {
-                return input; // Sends back answer for processing.
+                answer = true;
             }
-            else
-            {
-                Console.WriteLine("\nThat input isn't valid.");
-                return ' '; // Sends back space to trigger another prompt for Y or N.
-            }
+            
+            return answer;
+        }
+
+        public static char ChosenShape(char c)
+        {
+            return (c == 'X') ? 'O' : 'X'; // The shape output will be the shape not input.
         }
     }
 }

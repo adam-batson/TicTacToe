@@ -10,8 +10,7 @@ namespace TicTacToe
     {
         public int TurnCount { get; private set; }
         public bool InputIsValid { get; private set; }
-        public Player P1;
-        public Player P2;
+        Random rand;
         private Grid grid;
         private bool Player1Turn;     
         private string[] WinConditions => new string[] {grid.WinRow1, grid.WinRow2, grid.WinRow3,
@@ -21,59 +20,87 @@ namespace TicTacToe
         public Game()
         {
             grid = new();
-            P1 = new();
-            P1.Name = "Player 1";
-            P2 = new();
-            P2.Name = "Player 2";
             TurnCount = 0;
-            Player1Turn = true;
+            Player1Turn = true; // Defaults to Player 1's turn first.
             InputIsValid = true;
+            rand = new Random();
         }
 
-        public void PlayGame() // Handles the actual running of the game.
+        public void PlayGame(Player p1, Player p2) // Handles the actual running of the game.
         {
-            UI.Welcome();
-            P1.ChangeShape(UI.GetShape(P1));
-            P2.ChangeShape(UI.GetShape(P2));
-            UpdateScreen();
+            char chosenShape; // Holds the shape chosen by the first player.
+
+            if (rand.Next(0,2) == 0) // Player 1 chooses shape.
+            {
+                UI.GoesFirst(p1);
+                chosenShape = UI.GetShape(p1);
+                p1.ChangeShape(chosenShape);
+
+                var p2Shape = Check.ChosenShape(chosenShape); // assigns Player 2 shape based on Player 1's choice.
+                p2.ChangeShape(p2Shape);
+            }
+            else // Player 2 chooses shape.
+            {
+                Player1Turn = !Player1Turn; // It is not Player 1's turn.
+
+                UI.GoesFirst(p2);
+                chosenShape = UI.GetShape(p2);
+                p2.ChangeShape(chosenShape);
+
+                var p1Shape = Check.ChosenShape(chosenShape); // assigns Player 1 shape based on Player 2's choice.
+                p1.ChangeShape(p1Shape);
+            }
+
+            UpdateScreen(p1, p2);
 
             while (TurnCount < 9) // Once 9 turns are taken, all cells will be full.
             {
-                var input = 0;
+                int moveInput;
 
                 do // Asks for input once, but repeats request if the chosen cell is already filled.
                 {
-                    input = UI.MoveChoice(TurnCount);
-                    InputIsValid = Check.ValidMove(grid, input);
+                    if (Player1Turn)
+                    {
+                        moveInput = UI.MoveChoice(p1);
+                    }
+                    else
+                    {
+                        moveInput = UI.MoveChoice(p2);
+                    }
+                    InputIsValid = Check.ValidMove(grid, moveInput);
                 } while (InputIsValid == false);
 
                 if (Player1Turn)
                 {
-                    grid.AddToGrid(P1, input); // We get the cell from the player and send it to be added to the grid.
+                    grid.AddToGrid(p1, moveInput); // We get the cell from the player and send it to be added to the grid.
                 }
                 else
                 {
-                    grid.AddToGrid(P2, input);
+                    grid.AddToGrid(p2, moveInput);
                 }
 
-                UpdateScreen();
+                UpdateScreen(p1, p2);
                 TurnCount++;
 
                 if (TurnCount >= 5) // Turn 5 is the earliest that a win condition can be met.
                 {
                     if (Player1Turn)
                     {
-                        if (Check.Win(P1, WinConditions)) // If a win is found, it returns true and exits the game loop.
+                        if (Check.Win(p1, WinConditions)) // If a win is found, it returns true and exits the game loop.
                         {
+                            UpdateScreen(p1, p2);
+                            UI.NotifyWin(p1);
                             break;
                         }
                     }
                     else
                     {
-                        if (Check.Win(P2, WinConditions))
+                        if (Check.Win(p2, WinConditions))
                         {
+                            UpdateScreen(p1, p2);
+                            UI.NotifyWin(p2);
                             break;
-                        } 
+                        }
                     }
                     if (TurnCount == 9) // If no wins, but also no more moves avalable, calls a draw.
                     {
@@ -82,18 +109,14 @@ namespace TicTacToe
                     }
                 }
 
-                if (TurnCount % 2 == 1)
-                {
-                    Player1Turn = !Player1Turn; // Switches the player whose turn it is every other turn.
-                }
+                Player1Turn = !Player1Turn; // Changes the turn.
             }
-
         }
 
-        private void UpdateScreen()
+        private void UpdateScreen(Player p1, Player p2)
         {
             grid.PrintGrid();
-            UI.PrintScore(P1, P2);
+            UI.PrintScore(p1, p2);
         }
     }    
         
