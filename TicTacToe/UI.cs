@@ -84,7 +84,7 @@ namespace TicTacToe
             return playAgain;
         }
 
-        public static char GetShape(Player p)
+        public static char GetShape(Player p) // Gets a player's choice to be X or O.
         {
             bool validInput;
             bool validChoice;

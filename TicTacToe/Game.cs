@@ -59,14 +59,7 @@ namespace TicTacToe
 
                 do // Asks for input once, but repeats request if the chosen cell is already filled.
                 {
-                    if (Player1Turn)
-                    {
-                        moveInput = UI.MoveChoice(p1);
-                    }
-                    else
-                    {
-                        moveInput = UI.MoveChoice(p2);
-                    }
+                    moveInput = Player1Turn ? UI.MoveChoice(p1) : UI.MoveChoice(p2);
                     InputIsValid = Check.ValidMove(grid, moveInput);
                 } while (InputIsValid == false);
 

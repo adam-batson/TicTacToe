@@ -25,11 +25,10 @@ namespace TicTacToe
 
         public static bool Win(Player p, string[] wincons)
         {
-            bool win = false;
+            var win = (wincons.Any(x => x.Equals($"{p.Shape}{p.Shape}{p.Shape}")));
 
-                if (wincons.Any(x => x.Equals($"{p.Shape}{p.Shape}{p.Shape}"))) // Check if player 1 has 3 in a row.
+                if (win)
                 {
-                    win = true;
                     p.AddScore();
                 }
 
@@ -38,15 +37,8 @@ namespace TicTacToe
 
         public static bool YesOrNo(char input) // Checks if user wants to play again
         {
-            bool answer = false;
             input = Char.ToUpper(input);
-
-            if (input == 'Y')
-            {
-                answer = true;
-            }
-            
-            return answer;
+            return (input == 'Y');
         }
 
         public static char ChosenShape(char c)
