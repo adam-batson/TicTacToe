@@ -31,9 +31,9 @@ namespace TicTacToe
             return Convert.ToInt32(chosenCell.Trim()); // Just in case we end up with spaces, remove them before sendinginput as an int.
         }
 
-        public static void NotifyWin(int player)
+        public static void NotifyWin(Player p)
         {
-            Console.WriteLine($"\nPlayer {player} wins!");
+            Console.WriteLine($"\n{p.Name} wins!");
         }
 
         public static void NotifyDraw()
@@ -43,16 +43,26 @@ namespace TicTacToe
 
         public static bool PlayAgain()
         {
-            char answer;
-            char c;
+            char answer = ' ';
+            char c = ' ';
 
             do
             {
-                Console.Write("\nWould you like to play again? (Y or N) ");
-                answer = Convert.ToChar(Console.ReadLine().ToUpper()); // Takes the string input, makes it an uppercase char.
-                c = Check.ValidYesOrNo(answer);
-
+                Console.Write("\nWould you like to play again? (Y or N): ");
+                while (answer == ' ')
+                {
+                    try
+                    {
+                        answer = Convert.ToChar(Console.ReadLine().ToUpper()); // Takes the string input, makes it an uppercase char.
+                        c = Check.ValidYesOrNo(answer);
+                    }
+                    catch (FormatException e)
+                    {
+                        Console.Write("\n" + e.Message + " Play again (Y or N): ");
+                    }
+                }
             } while (c != 'Y' && c != 'N');
+
 
             if (c == 'Y') // Repeat the game
             {
@@ -62,8 +72,33 @@ namespace TicTacToe
             {
                 Console.WriteLine("\nThanks for playing!");
                 return false;
+            }  
+        }
+
+        public static char GetShape(Player p)
+        {
+            Console.Clear();
+            Console.WriteLine($"\n{p.Name}, choose your symbol:\n");
+            foreach(var shape in p.PossibleShapes)
+            {
+                Console.Write($"{shape} ");
+            }
+            Console.WriteLine();
+
+            var c = Convert.ToChar(Console.ReadLine());
+            return c;
+        }
+
+        public static void PrintScore(Player p, Player q)
+        {
+            var scorecard = $"\nPlayer 1: {p.Score}  |  Player 2: {q.Score}\n";
+
+            foreach (var c in scorecard)
+            {
+                Console.Write("-");
             }
             
+            Console.WriteLine($"\nPlayer 1: {p.Score}  |  Player 2: {q.Score}");
         }
     }
 }

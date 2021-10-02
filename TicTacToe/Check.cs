@@ -24,18 +24,13 @@ namespace TicTacToe
             else return true;
         }
 
-        public static bool Win(string[] wincons)
+        public static bool Win(Player p, string[] wincons)
         {
             bool win = false;
 
-                if (wincons.Any(x => x.Equals("XXX"))) // Check if player 1 has 3 in a row.
+                if (wincons.Any(x => x.Equals($"{p.Shape}{p.Shape}{p.Shape}"))) // Check if player 1 has 3 in a row.
                 {
-                    UI.NotifyWin(1);
-                    win = true;
-                }
-                else if (wincons.Any(x => x.Equals("OOO"))) // Check if player 2 has 3 in a row.
-                {
-                    UI.NotifyWin(2);
+                    UI.NotifyWin(p);
                     win = true;
                 }
 
