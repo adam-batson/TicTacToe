@@ -132,6 +132,7 @@ namespace TicTacToe
 
         public static void GoesFirst(Player p)
         {
+            Console.Clear();
             Console.WriteLine($"\n{p.Name} goes first this game!");
         }
     }
