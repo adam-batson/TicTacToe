@@ -11,6 +11,7 @@ namespace TicTacToe
         public char[] Moves { get; private set; }
         public char[] AvailableMoves { get; private set; }
 
+        // Win conditions update as moves are added to the grid.
         public string WinRow1 => $"{Moves[0]}{Moves[1]}{Moves[2]}";
         public string WinRow2 => $"{Moves[3]}{Moves[4]}{Moves[5]}";
         public string WinRow3 => $"{Moves[6]}{Moves[7]}{Moves[8]}";
@@ -35,10 +36,10 @@ namespace TicTacToe
             Console.WriteLine($" {Moves[6]} | {Moves[7]} | {Moves[8]}\n");
         }
         
-        public void AddToGrid(Player p, int index)
+        public void AddToGrid(Player p, int cell)
         {
-            Moves[index - 1] = p.Shape;
-            AvailableMoves[index - 1] = ' ';
+            Moves[cell - 1] = p.Shape;
+            AvailableMoves[cell - 1] = ' ';
         }
 
         public void ResetGrid()

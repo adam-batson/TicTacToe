@@ -12,7 +12,7 @@ namespace TicTacToe
         public bool InputIsValid { get; private set; }
         Random rand;
         private Grid grid;
-        private bool Player1Turn;     
+        private bool Player1Turn;
         private string[] WinConditions => new string[] {grid.WinRow1, grid.WinRow2, grid.WinRow3,
                                                         grid.WinColumn1, grid.WinColumn2, grid.WinColumn3,
                                                         grid.WinDiagonal1, grid.WinDiagonal2 };
@@ -36,18 +36,18 @@ namespace TicTacToe
                 chosenShape = UI.GetShape(p1);
                 p1.ChangeShape(chosenShape);
 
-                var p2Shape = Check.ChosenShape(chosenShape); // assigns Player 2 shape based on Player 1's choice.
+                var p2Shape = Check.ChosenShape(chosenShape); // Assigns Player 2 shape based on Player 1's choice.
                 p2.ChangeShape(p2Shape);
             }
             else // Player 2 chooses shape.
             {
-                Player1Turn = !Player1Turn; // It is not Player 1's turn.
+                Player1Turn = !Player1Turn; // This allows Player 2 to have the first turn.
 
                 UI.GoesFirst(p2);
                 chosenShape = UI.GetShape(p2);
                 p2.ChangeShape(chosenShape);
 
-                var p1Shape = Check.ChosenShape(chosenShape); // assigns Player 1 shape based on Player 2's choice.
+                var p1Shape = Check.ChosenShape(chosenShape); // Assigns Player 1 shape based on Player 2's choice.
                 p1.ChangeShape(p1Shape);
             }
 
@@ -63,7 +63,7 @@ namespace TicTacToe
                     InputIsValid = Check.ValidMove(grid, moveInput);
                 } while (InputIsValid == false);
 
-                if (Player1Turn)
+                if (Player1Turn) // Allows whichever player whose turn it is to make a move
                 {
                     grid.AddToGrid(p1, moveInput); // We get the cell from the player and send it to be added to the grid.
                 }
@@ -79,8 +79,10 @@ namespace TicTacToe
                 {
                     if (Player1Turn)
                     {
-                        if (Check.Win(p1, WinConditions)) // If a win is found, it returns true and exits the game loop.
+                        if (Check.Win(p1, WinConditions)) // Checks for Player 1 win, notifies players, increments GamesPlayed, and exits loop if they did win.
                         {
+                            p1.AddGamesPlayed();
+                            p2.AddGamesPlayed();
                             UpdateScreen(p1, p2);
                             UI.NotifyWin(p1);
                             break;
@@ -88,8 +90,10 @@ namespace TicTacToe
                     }
                     else
                     {
-                        if (Check.Win(p2, WinConditions))
+                        if (Check.Win(p2, WinConditions)) // Checks for Player 2 win, notifies players, increments GamesPlayed, and exits loop if they did win.
                         {
+                            p1.AddGamesPlayed();
+                            p2.AddGamesPlayed();
                             UpdateScreen(p1, p2);
                             UI.NotifyWin(p2);
                             break;
@@ -97,6 +101,9 @@ namespace TicTacToe
                     }
                     if (TurnCount == 9) // If no wins, but also no more moves avalable, calls a draw.
                     {
+                        p1.AddGamesPlayed();
+                        p2.AddGamesPlayed();
+                        UpdateScreen(p1, p2);
                         UI.NotifyDraw();
                         break;
                     }
@@ -106,7 +113,7 @@ namespace TicTacToe
             }
         }
 
-        private void UpdateScreen(Player p1, Player p2)
+        private void UpdateScreen(Player p1, Player p2) // Refreshes the grid and score display.
         {
             grid.PrintGrid();
             UI.PrintScore(p1, p2);
