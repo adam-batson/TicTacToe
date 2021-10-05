@@ -29,11 +29,22 @@ namespace TicTacToe
         public void PrintGrid()
         {
             Console.Clear(); // Clears screen for neatness.
-            Console.WriteLine($"\n {Moves[0]} | {Moves[1]} | {Moves[2]}");
-            Console.WriteLine("---+---+---");
-            Console.WriteLine($" {Moves[3]} | {Moves[4]} | {Moves[5]}");
-            Console.WriteLine("---+---+---");
-            Console.WriteLine($" {Moves[6]} | {Moves[7]} | {Moves[8]}\n");
+            for (int i = 0; i < Moves.Length; i++)
+            {
+                SetMovesColor(i); // Prints the move in color based on what's in the index.
+                if (i != 2 && i != 5 && i != 8) // Prints a vertical bar if the index isn't the end of a row.
+                {
+                    Console.Write(" |");
+                }
+                else
+                {
+                    if (i == 2 || i == 5) // Prints the horizontal bar when the index ends row 1 or row 2.
+                    {
+                        Console.WriteLine("\n---+---+---");
+                    }
+                }
+            }
+            Console.WriteLine();
         }
         
         public void AddToGrid(Player p, int cell)
@@ -46,6 +57,24 @@ namespace TicTacToe
         {
             Moves = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
             AvailableMoves = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+        }
+
+        private void SetMovesColor(int i) // Changes color of the shape based on what's in the index passed in.
+        {
+            if (Moves[i] == 'X')
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($" {Moves[i]}");
+                Console.ResetColor();
+            }
+            else if (Moves[i] == 'O')
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($" {Moves[i]}");
+                Console.ResetColor();
+            }
+            else // If no X or O, then it will display the cell number in white.
+                Console.Write($" {Moves[i]}");
         }
     }
 }

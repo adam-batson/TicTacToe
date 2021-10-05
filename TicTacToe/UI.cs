@@ -121,8 +121,16 @@ namespace TicTacToe
 
         public static string GetName(Player p)
         {
-            Console.WriteLine($"\n{p.Name}, please enter your name: ");
-            var name = Console.ReadLine();
+            var name = "";
+            do
+            {
+                Console.WriteLine($"\n{p.Name}, please enter your name: ");
+                name = Console.ReadLine().Trim();
+                if (name == "")
+                {
+                    Console.WriteLine("You need to enter a name.");
+                }
+            } while (name == "");
             return name;
         }
 
