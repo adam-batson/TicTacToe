@@ -29,12 +29,13 @@ namespace TicTacToe
         public void PrintGrid()
         {
             Console.Clear(); // Clears screen for neatness.
+            Console.WriteLine();
             for (int i = 0; i < Moves.Length; i++)
             {
                 SetMovesColor(i); // Prints the move in color based on what's in the index.
                 if (i != 2 && i != 5 && i != 8) // Prints a vertical bar if the index isn't the end of a row.
                 {
-                    Console.Write(" |");
+                    Console.Write("|");
                 }
                 else
                 {
@@ -64,17 +65,19 @@ namespace TicTacToe
             if (Moves[i] == 'X')
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($" {Moves[i]}");
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.Write($" {Moves[i]} ");
                 Console.ResetColor();
             }
             else if (Moves[i] == 'O')
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write($" {Moves[i]}");
+                Console.BackgroundColor = ConsoleColor.Yellow;
+                Console.Write($" {Moves[i]} ");
                 Console.ResetColor();
             }
             else // If no X or O, then it will display the cell number in white.
-                Console.Write($" {Moves[i]}");
+                Console.Write($" {Moves[i]} ");
         }
     }
 }
